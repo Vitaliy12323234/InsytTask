@@ -12,64 +12,64 @@ Python-скрипт выполняет только транспортную ф�
 **Для запуска скрипта необходимо:**
 
 ## ТРЕБОВАНИЯ
-Python 3.10+
-Ollama (Windows / Linux / macOS)
-Модель qwen3.5:9b 
-GPU с 8+ GB видеопамяти 
+Python 3.10+  
+Ollama (Windows / Linux / macOS)  
+Модель qwen3.5:9b   
+GPU с 8+ GB видеопамяти  
 
 ## УСТАНОВКА
-Скачать модель:
-ollama pull qwen3.5:9b
-Создать venv и поставить зависимости:
-python -m venv .venv
-.venv\Scripts\activate (Windows)
-pip install -r pandas
-pip install -r requests
+Скачать модель:  
+ollama pull qwen3.5:9b  
+Создать venv и поставить зависимости:  
+python -m venv .venv  
+.venv\Scripts\activate (Windows)  
+pip install -r pandas  
+pip install -r requests  
 
 ## ЗАПУСК
-python classifierLLM.py
+python classifierLLM.py  
 
-Скрипт:
-Читает tikets.csv из текущей папки.
-Отправляет каждое обращение в Ollama (http://127.0.0.1:11434/api/chat).
-Пишет ответы в result.csv.
+Скрипт:  
+Читает tikets.csv из текущей папки.  
+Отправляет каждое обращение в Ollama (http://127.0.0.1:11434/api/chat).  
+Пишет ответы в result.csv.  
 
 ## РЕЗУЛЬТАТ
 Файл result.csv (UTF-8, разделитель — запятая), 150 строк, колонки по ТЗ:
 
-id — исходный идентификатор
-text — исходный текст (без изменений)
-category — одна из 5 категорий или «Не определено»
-tag — «Технический», «Организационный» или «Требует ручной обработки»
-requires_manual_review — true / false (нижний регистр)
-status — ok
-error — пусто
+id — исходный идентификатор  
+text — исходный текст (без изменений)  
+category — одна из 5 категорий или «Не определено»  
+tag — «Технический», «Организационный» или «Требует ручной обработки»  
+requires_manual_review — true / false (нижний регистр)  
+status — ok  
+error — пусто  
 
-**Порядок записей и id сохранены как в исходном файле.**
+**Порядок записей и id сохранены как в исходном файле.**  
 
 ## ПАРАМЕТРЫ ГЕНЕРАЦИИ
-В запросе к Ollama (/api/chat) передаются:
-temperature — 0.0 — детерминированный выбор категории
-format — "json" — валидный JSON на уровне движка (без regex-чистки)
-think — False — отключает «размышления» Qwen 3.5, иначе content пуст
-timeout — 180 сек — запас на длинные тексты
+В запросе к Ollama (/api/chat) передаются:  
+temperature — 0.0 — детерминированный выбор категории  
+format — "json" — валидный JSON на уровне движка (без regex-чистки)  
+think — False — отключает «размышления» Qwen 3.5, иначе content пуст  
+timeout — 180 сек — запас на длинные тексты  
 
 ## СИСТЕМНЫЙ ПРОМПТ
 Полный текст промпта — в Пояснительная_записка.md, Приложение A. Он же продублирован константой SYSTEM_PROMPT в начале classifierLLM.py.
 
 ## ВОЗМОЖНЫЕ ПРОБЛЕМЫ
-ModuleNotFoundError: No module named 'pandas'
-Причина: venv не активирован или зависимости не установлены.
-Решение: активировать venv, выполнить pip install -r requirements.txt.
+ModuleNotFoundError: No module named 'pandas'  
+Причина: venv не активирован или зависимости не установлены.  
+Решение: активировать venv, выполнить pip install -r requirements.txt.  
 
-Пустой ответ модели
-Причина: модель использует режим «размышлений».
-Решение: проверить, что в запросе есть "think": False и format: "json".
+Пустой ответ модели  
+Причина: модель использует режим «размышлений».  
+Решение: проверить, что в запросе есть "think": False и format: "json".  
 
-ConnectionError
-Причина: Ollama не запущена.
-Решение: запустить Ollama, проверить http://127.0.0.1:11434.
+ConnectionError  
+Причина: Ollama не запущена.  
+Решение: запустить Ollama, проверить http://127.0.0.1:11434.  
 
-Неверное имя модели
-Причина: опечатка в MODEL_NAME.
-Решение: выполнить ollama list, подставить точное имя.
+Неверное имя модели  
+Причина: опечатка в MODEL_NAME.  
+Решение: выполнить ollama list, подставить точное имя.  
